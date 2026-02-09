@@ -3,6 +3,7 @@ import 'package:pingo/common/http_client.dart';
 import 'package:pingo/common/theme.dart';
 import 'package:pingo/screens/about_screen.dart';
 import 'package:pingo/screens/home_screen.dart';
+import 'package:pingo/screens/modern_home_screen.dart';
 import 'package:pingo/screens/settings_screen.dart';
 import 'package:pingo/widgets/navigation_rail_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -135,7 +136,8 @@ class _RootScreenState extends State<RootScreen> {
   @override
   void initState() {
     super.initState();
-    _pages = [SettingsWidget(), HomePage(), AboutScreen()];
+    // استفاده از UI جدید
+    _pages = [SettingsWidget(), ModernHomeScreen(), AboutScreen()];
   }
 
   @override
