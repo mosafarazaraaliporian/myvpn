@@ -1,6 +1,6 @@
-import 'package:begzar/common/theme.dart';
-import 'package:begzar/widgets/settings/blocked_apps_widget.dart';
-import 'package:begzar/widgets/settings/language_widget.dart';
+import 'package:pingo/common/theme.dart';
+import 'package:pingo/widgets/settings/blocked_apps_widget.dart';
+import 'package:pingo/widgets/settings/language_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';

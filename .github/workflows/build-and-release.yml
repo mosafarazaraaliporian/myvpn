@@ -57,10 +57,10 @@ jobs:
       - name: Rename APK files
         run: |
           mkdir -p release-apks
-          cp build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk release-apks/begzar-v${{ steps.version.outputs.version }}-armeabi-v7a.apk || true
-          cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk release-apks/begzar-v${{ steps.version.outputs.version }}-arm64-v8a.apk || true
-          cp build/app/outputs/flutter-apk/app-x86_64-release.apk release-apks/begzar-v${{ steps.version.outputs.version }}-x86_64.apk || true
-          cp build/app/outputs/flutter-apk/app-release.apk release-apks/begzar-v${{ steps.version.outputs.version }}-universal.apk || true
+          cp build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk release-apks/pingo-v${{ steps.version.outputs.version }}-armeabi-v7a.apk || true
+          cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk release-apks/pingo-v${{ steps.version.outputs.version }}-arm64-v8a.apk || true
+          cp build/app/outputs/flutter-apk/app-x86_64-release.apk release-apks/pingo-v${{ steps.version.outputs.version }}-x86_64.apk || true
+          cp build/app/outputs/flutter-apk/app-release.apk release-apks/pingo-v${{ steps.version.outputs.version }}-universal.apk || true
 
       - name: Upload APK artifacts
         uses: actions/upload-artifact@v4
@@ -81,7 +81,7 @@ jobs:
           COMMIT_AUTHOR=$(git log -1 --pretty=format:'%an')
           COMMIT_HASH=$(git log -1 --pretty=format:'%h')
           
-          MESSAGE="🚀 *Begzar VPN - New Build*%0A%0A"
+          MESSAGE="🚀 *Pingo VPN - New Build*%0A%0A"
           MESSAGE="${MESSAGE}📦 *Version:* \`${VERSION}\` (Build ${BUILD_NUMBER})%0A"
           MESSAGE="${MESSAGE}🔨 *Commit:* \`${COMMIT_HASH}\`%0A"
           MESSAGE="${MESSAGE}👤 *Author:* ${COMMIT_AUTHOR}%0A"
@@ -110,7 +110,7 @@ jobs:
         with:
           files: release-apks/*.apk
           body: |
-            ## Begzar VPN v${{ steps.version.outputs.version }}
+            ## Pingo VPN v${{ steps.version.outputs.version }}
             
             ### 📦 Downloads
             - **Universal APK**: Compatible with all devices

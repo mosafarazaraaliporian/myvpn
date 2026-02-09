@@ -1,4 +1,4 @@
-import 'package:begzar/common/theme.dart';
+import 'package:pingo/common/theme.dart';
 import 'package:flutter/material.dart';
 
 class OptionTile extends StatelessWidget {

@@ -1,8 +1,8 @@
-import 'package:begzar/common/theme.dart';
-import 'package:begzar/screens/about_screen.dart';
-import 'package:begzar/screens/home_screen.dart';
-import 'package:begzar/screens/settings_screen.dart';
-import 'package:begzar/widgets/navigation_rail_widget.dart';
+import 'package:pingo/common/theme.dart';
+import 'package:pingo/screens/about_screen.dart';
+import 'package:pingo/screens/home_screen.dart';
+import 'package:pingo/screens/settings_screen.dart';
+import 'package:pingo/widgets/navigation_rail_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
     final defaultTextStyle =
         TextStyle(fontFamily: 'sm', color: Color(0xffF7FAFF));
     return MaterialApp(
-      title: 'Begzar VPN',
+      title: 'Pingo VPN',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: TextTheme(

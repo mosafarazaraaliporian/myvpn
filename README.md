@@ -1,53 +1,72 @@
-<div align="center">
+# 🐦 Pingo VPN
+Free, Open-Source VPN Client for Android
 
-![Banner](https://github.com/user-attachments/assets/eaf4d8df-cf72-4fe3-a492-7049df644c18)
+![Pingo VPN](assets/images/logo.png)
 
-# 🐦 Begzar VPN
+## English | فارسی
 
-**Free, Open-Source VPN Client for Android**
+### English
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Flutter](https://img.shields.io/badge/Flutter-3.8+-blue.svg)](https://flutter.dev)
-[![Android](https://img.shields.io/badge/Android-10+-green.svg)](https://www.android.com)
+## 🚀 Features
 
-[English](#english) | [فارسی](#persian)
+✅ **Fast & Secure Connection** - Built on Segment SDK  
+✅ **Auto Server Selection** - Automatically connects to the fastest server  
+✅ **Multiple Protocols** - Support for VLESS, VMess, Shadowsocks, Trojan, Hysteria  
+✅ **Modern UI** - Beautiful and intuitive interface  
+✅ **Real-time Stats** - Connection speed, ping, and server info  
+✅ **Auto Updates** - Automatic version checking and updates  
+✅ **Battery Optimized** - Efficient power consumption  
 
-</div>
+## 🏗️ Built With
 
----
+- **Flutter** - Cross-platform UI framework
+- **Segment SDK** - Core VPN engine (Golang-based)
+- **Xray-core** - Underlying proxy protocol
+- **Firebase** - Cloud messaging and configuration
+- **Cloudflare Workers** - API backend
 
-## English
+## 📱 Requirements
 
-### 🚀 Features
+- Android 10+ (API 29+)
+- Internet Connection
 
-- ✅ **Fast & Secure Connection** - Built on [Segment SDK](https://github.com/mahsanet/segment)
-- ✅ **Auto Server Selection** - Automatically connects to the fastest server
-- ✅ **Multiple Protocols** - Support for VLESS, VMess, Shadowsocks, Trojan, Hysteria
-- ✅ **Modern UI** - Beautiful and intuitive interface
-- ✅ **Real-time Stats** - Connection speed, ping, and server info
-- ✅ **Auto Updates** - Automatic version checking and updates
-- ✅ **Battery Optimized** - Efficient power consumption
+## 📥 Download
 
-### 🏗️ Built With
+Get the latest version from [Releases](https://github.com/mosafarazaraaliporian/myvpn/releases)
 
-- **[Flutter](https://flutter.dev)** - Cross-platform UI framework
-- **[Segment SDK](https://github.com/mahsanet/segment)** - Core VPN engine (Golang-based)
-- **[Xray-core](https://github.com/XTLS/Xray-core)** - Underlying proxy protocol
-- **Riverpod** - State management
-- **Dio** - HTTP client for API calls
-- **Firebase** - Cloud messaging and analytics
+## 🔧 Setup
 
-### 📱 Requirements
+### For Users
+1. Download the APK from releases
+2. Install on your Android device
+3. Open the app and connect
 
-- **Android 10+** (API 29+)
-- **Internet Connection**
+### For Developers
+1. Clone the repository
+```bash
+git clone https://github.com/mosafarazaraaliporian/myvpn.git
+cd myvpn
+```
 
-### 📥 Download
+2. Install dependencies
+```bash
+flutter pub get
+```
 
-Get the latest version from [Releases](https://github.com/Begzar/BegzarApp/releases/latest)
+3. Setup Firebase (see [DEPLOYMENT-GUIDE.md](DEPLOYMENT-GUIDE.md))
 
+4. Build the app
+```bash
+flutter build apk --release
+```
 
-### 🤝 Contributing
+## 🌐 Backend Setup
+
+This app uses Firebase Realtime Database and Cloudflare Workers for server management.
+
+See [DEPLOYMENT-GUIDE.md](DEPLOYMENT-GUIDE.md) for complete setup instructions.
+
+## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
@@ -57,88 +76,59 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-### 📄 License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### 🙏 Acknowledgments
+## 🙏 Acknowledgments
 
-- [Segment SDK](https://github.com/mahsanet/segment) - Core VPN engine
-- [Xray-core](https://github.com/XTLS/Xray-core) - Proxy protocols
-- [Flutter](https://flutter.dev) - UI framework
+Based on [Begzar VPN](https://github.com/Begzar/BegzarApp) - MIT License
 
-### 📞 Contact
-
-- **Email**: [info@begzar.xyz](mailto:info@begzar.xyz)
-- **Telegram**: [@BegzarVPN](https://t.me/BegzarVPN)
-- **Website**: [begzar.xyz](https://begzar.xyz)
+- **Segment SDK** - Core VPN engine
+- **Xray-core** - Proxy protocols
+- **Flutter** - UI framework
 
 ---
 
-<div id="persian"></div>
+### فارسی
 
-## فارسی
+## 🚀 ویژگی‌ها
 
-### 🚀 ویژگی‌ها
+✅ **اتصال سریع و امن** - بر پایه Segment SDK  
+✅ **انتخاب خودکار سرور** - اتصال به سریع‌ترین سرور به صورت خودکار  
+✅ **پروتکل‌های متنوع** - پشتیبانی از VLESS، VMess، Shadowsocks، Trojan، Hysteria  
+✅ **رابط کاربری مدرن** - طراحی زیبا و کاربرپسند  
+✅ **آمار لحظه‌ای** - سرعت اتصال، پینگ و اطلاعات سرور  
+✅ **به‌روزرسانی خودکار** - بررسی و دانلود نسخه‌های جدید  
+✅ **بهینه‌سازی مصرف باتری** - مصرف بهینه انرژی  
 
-- ✅ **اتصال سریع و امن** - بر پایه [Segment SDK](https://github.com/mahsanet/segment)
-- ✅ **انتخاب خودکار سرور** - اتصال به سریع‌ترین سرور به صورت خودکار
-- ✅ **پروتکل‌های متنوع** - پشتیبانی از VLESS، VMess، Shadowsocks، Trojan، Hysteria
-- ✅ **رابط کاربری مدرن** - طراحی زیبا و کاربرپسند
-- ✅ **آمار لحظه‌ای** - سرعت اتصال، پینگ و اطلاعات سرور
-- ✅ **به‌روزرسانی خودکار** - بررسی و دانلود نسخه‌های جدید
-- ✅ **بهینه‌سازی مصرف باتری** - مصرف بهینه انرژی
+## 🏗️ تکنولوژی‌ها
 
-### 🏗️ تکنولوژی‌ها
+- **Flutter** - فریمورک توسعه اپلیکیشن
+- **Segment SDK** - موتور اصلی VPN (بر پایه Golang)
+- **Xray-core** - پروتکل‌های پروکسی
+- **Firebase** - پیام‌رسانی ابری و تنظیمات
+- **Cloudflare Workers** - بکند API
 
-- **[Flutter](https://flutter.dev)** - فریمورک توسعه اپلیکیشن
-- **[Segment SDK](https://github.com/mahsanet/segment)** - موتور اصلی VPN (بر پایه Golang)
-- **[Xray-core](https://github.com/XTLS/Xray-core)** - پروتکل‌های پروکسی
-- **Riverpod** - مدیریت state
-- **Dio** - ارتباط با API
-- **Firebase** - پیام‌رسانی ابری و آنالیتیکس
+## 📱 نیازمندی‌ها
 
-### 📱 نیازمندی‌ها
+- Android 10 به بالا (API 29+)
+- اتصال به اینترنت
 
-- **Android 10 به بالا** (API 29+)
-- **اتصال به اینترنت**
+## 📥 دانلود
 
-### 📥 دانلود
+آخرین نسخه را از [Releases](https://github.com/mosafarazaraaliporian/myvpn/releases) دانلود کنید
 
-آخرین نسخه را از [Releases](https://github.com/Begzar/BegzarApp/releases/latest) دانلود کنید
+## 📄 لایسنس
 
-### 🤝 مشارکت
+این پروژه تحت لایسنس MIT منتشر شده است.
 
-مشارکت شما استقبال می‌شود! لطفاً Pull Request ارسال کنید.
+## 🙏 تشکر و قدردانی
 
-1. مخزن را Fork کنید
-2. برنچ ویژگی خود را بسازید (`git checkout -b feature/AmazingFeature`)
-3. تغییرات را commit کنید (`git commit -m 'Add some AmazingFeature'`)
-4. به برنچ push کنید (`git push origin feature/AmazingFeature`)
-5. Pull Request باز کنید
-
-### 📄 لایسنس
-
-این پروژه تحت لایسنس MIT منتشر شده است - فایل [LICENSE](LICENSE) را ببینید.
-
-### 🙏 تشکر و قدردانی
-
-- [Segment SDK](https://github.com/mahsanet/segment) - موتور اصلی VPN
-- [Xray-core](https://github.com/XTLS/Xray-core) - پروتکل‌های پروکسی
-- [Flutter](https://flutter.dev) - فریمورک UI
-
-### 📞 ارتباط با ما
-
-- **ایمیل**: [info@begzar.xyz](mailto:info@begzar.xyz)
-- **تلگرام**: [@BegzarVPN](https://t.me/BegzarVPN)
-- **وبسایت**: [begzar.xyz](https://begzar.xyz)
+بر اساس [Begzar VPN](https://github.com/Begzar/BegzarApp) - لایسنس MIT
 
 ---
 
-<div align="center">
+⭐ اگر این پروژه را دوست دارید، یک ستاره بدهید! ⭐
 
-**⭐ اگر این پروژه را دوست دارید، یک ستاره بدهید! ⭐**
-
-Made with ❤️ by Begzar Team
-
-</div>
+Made with ❤️ by Pingo Team

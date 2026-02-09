@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:begzar/common/cha.dart';
-import 'package:begzar/common/http_client.dart';
-import 'package:begzar/common/secure_storage.dart';
-import 'package:begzar/widgets/connection_widget.dart';
-import 'package:begzar/widgets/server_selection_modal_widget.dart';
-import 'package:begzar/widgets/vpn_status.dart';
+import 'package:pingo/common/cha.dart';
+import 'package:pingo/common/http_client.dart';
+import 'package:pingo/common/secure_storage.dart';
+import 'package:pingo/widgets/connection_widget.dart';
+import 'package:pingo/widgets/server_selection_modal_widget.dart';
+import 'package:pingo/widgets/vpn_status.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';

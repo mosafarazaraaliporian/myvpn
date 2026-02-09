@@ -1,4 +1,4 @@
-import 'package:begzar/common/theme.dart';
+import 'package:pingo/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart'; // اضافه کردن پکیج easy_localization

@@ -1,4 +1,4 @@
-package cloud.begzar.begzar
+package com.pingo.me
 
 import io.flutter.embedding.android.FlutterActivity
 

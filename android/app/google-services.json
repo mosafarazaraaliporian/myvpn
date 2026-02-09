@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "599036159381",
+    "project_id": "testrt-fa9d3",
+    "storage_bucket": "testrt-fa9d3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599036159381:android:4475a7451ba959c690429c",
+        "android_client_info": {
+          "package_name": "com.example.rat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjOKOfMtUie2xnW1gmyUGMkooohPQGMo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599036159381:android:c90ea85ffd151b3490429c",
+        "android_client_info": {
+          "package_name": "com.pingo.me"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjOKOfMtUie2xnW1gmyUGMkooohPQGMo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
