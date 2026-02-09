@@ -1,4 +1,5 @@
 import 'package:pingo/common/config.dart';
+import 'package:pingo/common/http_client.dart';
 import 'package:pingo/common/theme.dart';
 import 'package:pingo/screens/about_screen.dart';
 import 'package:pingo/screens/home_screen.dart';
@@ -36,6 +37,11 @@ void main() async {
     if (isJailBroken != true) {
       await EasyLocalization.ensureInitialized();
       print('🐦 EasyLocalization initialized');
+      
+      // Initialize HTTP Client با دریافت Worker URL از Firebase
+      print('🐦 Initializing HTTP Client...');
+      await initializeHttpClient();
+      print('🐦 HTTP Client initialized');
       
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         systemNavigationBarColor: ThemeColor.backgroundColor,
