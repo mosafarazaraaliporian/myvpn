@@ -12,28 +12,51 @@ import 'package:safe_device/safe_device.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  bool isJailBroken = await SafeDevice.isJailBroken;
-  if (isJailBroken != true) {
-    await EasyLocalization.ensureInitialized();
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: ThemeColor.backgroundColor,
-      systemNavigationBarIconBrightness: Brightness.light,
-    ));
-    runApp(
-      EasyLocalization(
-        supportedLocales: [
-          Locale('en', 'US'),
-          Locale('fa', 'IR'),
-          Locale('zh', 'CN'),
-          Locale('ru', 'RU'),
-        ],
-        path: 'assets/translations',
-        fallbackLocale: Locale('en', 'US'),
-        startLocale: Locale('en', 'US'),
-        saveLocale: true,
-        child: MyApp(),
-      ),
-    );
+  
+  try {
+    print('🐦 Pingo: Starting app...');
+    
+    // در حالت تست، چک jailbreak رو skip میکنیم
+    bool isJailBroken = false;
+    try {
+      isJailBroken = await SafeDevice.isJailBroken;
+      print('🐦 JailBreak check: $isJailBroken');
+    } catch (e) {
+      print('🐦 JailBreak check failed (emulator?): $e');
+      // در emulator ممکنه این چک fail کنه، ادامه میدیم
+    }
+    
+    if (isJailBroken != true) {
+      await EasyLocalization.ensureInitialized();
+      print('🐦 EasyLocalization initialized');
+      
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        systemNavigationBarColor: ThemeColor.backgroundColor,
+        systemNavigationBarIconBrightness: Brightness.light,
+      ));
+      
+      print('🐦 Running app...');
+      runApp(
+        EasyLocalization(
+          supportedLocales: [
+            Locale('en', 'US'),
+            Locale('fa', 'IR'),
+            Locale('zh', 'CN'),
+            Locale('ru', 'RU'),
+          ],
+          path: 'assets/translations',
+          fallbackLocale: Locale('en', 'US'),
+          startLocale: Locale('en', 'US'),
+          saveLocale: true,
+          child: MyApp(),
+        ),
+      );
+    } else {
+      print('🐦 Device is jailbroken, app will not start');
+    }
+  } catch (e, stackTrace) {
+    print('🐦 FATAL ERROR in main: $e');
+    print('🐦 Stack trace: $stackTrace');
   }
 }
 

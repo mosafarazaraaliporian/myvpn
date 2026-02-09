@@ -53,47 +53,71 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    getVersionName();
-    _loadServerSelection();
     
-    // در حالت تست، V2Ray رو initialize نمی‌کنیم
-    if (!AppConfig.isTestMode) {
-      flutterV2ray
-          .initializeV2Ray(
-        notificationIconResourceType: "mipmap",
-        notificationIconResourceName: "launcher_icon",
-      )
-          .then((value) async {
-        coreVersion = await flutterV2ray.getCoreVersion();
-
-        setState(() {});
-        Future.delayed(
-          Duration(seconds: 1),
-          () {
-            if (v2rayStatus.value.state == 'CONNECTED') {
-              delay();
-            }
-          },
-        );
-      }).catchError((error) {
-        if (AppConfig.enableDebugLogs) {
-          print('V2Ray initialization error: $error');
-        }
-      });
-    } else {
-      // حالت تست - فقط برای نمایش UI
+    try {
       if (AppConfig.enableDebugLogs) {
-        print('Running in TEST MODE - VPN disabled');
+        print('🐦 Pingo: initState started');
+        print('🐦 Test Mode: ${AppConfig.isTestMode}');
       }
+      
+      getVersionName();
+      _loadServerSelection();
+      
+      // در حالت تست، V2Ray رو initialize نمی‌کنیم
+      if (!AppConfig.isTestMode) {
+        if (AppConfig.enableDebugLogs) {
+          print('🐦 Initializing V2Ray...');
+        }
+        flutterV2ray
+            .initializeV2Ray(
+          notificationIconResourceType: "mipmap",
+          notificationIconResourceName: "launcher_icon",
+        )
+            .then((value) async {
+          if (AppConfig.enableDebugLogs) {
+            print('🐦 V2Ray initialized successfully');
+          }
+          coreVersion = await flutterV2ray.getCoreVersion();
+
+          setState(() {});
+          Future.delayed(
+            Duration(seconds: 1),
+            () {
+              if (v2rayStatus.value.state == 'CONNECTED') {
+                delay();
+              }
+            },
+          );
+        }).catchError((error) {
+          if (AppConfig.enableDebugLogs) {
+            print('🐦 V2Ray initialization error: $error');
+          }
+        });
+      } else {
+        // حالت تست - فقط برای نمایش UI
+        if (AppConfig.enableDebugLogs) {
+          print('🐦 Running in TEST MODE - VPN disabled');
+        }
+        // مقدار پیش‌فرض برای coreVersion
+        coreVersion = 'Test Mode';
+      }
+      
+      if (AppConfig.enableDebugLogs) {
+        print('🐦 Pingo: initState completed');
+      }
+    } catch (e, stackTrace) {
+      print('🐦 ERROR in initState: $e');
+      print('🐦 Stack trace: $stackTrace');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final bool isWideScreen = size.width > 600;
+    try {
+      final size = MediaQuery.sizeOf(context);
+      final bool isWideScreen = size.width > 600;
 
-    return Scaffold(
+      return Scaffold(
       appBar: isWideScreen ? null : _buildAppBar(isWideScreen),
       backgroundColor: const Color(0xff192028),
       body: SafeArea(
@@ -217,6 +241,36 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+    } catch (e, stackTrace) {
+      print('🐦 ERROR in build: $e');
+      print('🐦 Stack trace: $stackTrace');
+      // نمایش صفحه خطا
+      return Scaffold(
+        backgroundColor: const Color(0xff192028),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.error_outline, color: Colors.red, size: 64),
+              SizedBox(height: 16),
+              Text(
+                'Error loading app',
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+              SizedBox(height: 8),
+              Padding(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  e.toString(),
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
   }
 
   PreferredSizeWidget _buildAppBar(bool isWideScreen) {
