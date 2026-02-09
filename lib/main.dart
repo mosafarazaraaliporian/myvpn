@@ -1,3 +1,4 @@
+import 'package:pingo/common/config.dart';
 import 'package:pingo/common/theme.dart';
 import 'package:pingo/screens/about_screen.dart';
 import 'package:pingo/screens/home_screen.dart';
@@ -18,12 +19,18 @@ void main() async {
     
     // در حالت تست، چک jailbreak رو skip میکنیم
     bool isJailBroken = false;
-    try {
-      isJailBroken = await SafeDevice.isJailBroken;
-      print('🐦 JailBreak check: $isJailBroken');
-    } catch (e) {
-      print('🐦 JailBreak check failed (emulator?): $e');
-      // در emulator ممکنه این چک fail کنه، ادامه میدیم
+    
+    // فقط در production چک jailbreak انجام میشه
+    if (!AppConfig.isTestMode) {
+      try {
+        isJailBroken = await SafeDevice.isJailBroken;
+        print('🐦 JailBreak check: $isJailBroken');
+      } catch (e) {
+        print('🐦 JailBreak check failed: $e');
+        // در صورت خطا، ادامه میدیم
+      }
+    } else {
+      print('🐦 Test Mode: Skipping JailBreak check');
     }
     
     if (isJailBroken != true) {
