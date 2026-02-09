@@ -1,0 +1,127 @@
+name: Build and Release APK
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release --split-per-abi
+
+      - name: Build Universal APK
+        run: flutter build apk --release
+
+      - name: Get version from pubspec
+        id: version
+        run: |
+          VERSION=$(grep '^version:' pubspec.yaml | cut -d ' ' -f 2 | cut -d '+' -f 1)
+          BUILD_NUMBER=$(grep '^version:' pubspec.yaml | cut -d '+' -f 2)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "build_number=$BUILD_NUMBER" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION+$BUILD_NUMBER"
+
+      - name: Rename APK files
+        run: |
+          mkdir -p release-apks
+          cp build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk release-apks/begzar-v${{ steps.version.outputs.version }}-armeabi-v7a.apk || true
+          cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk release-apks/begzar-v${{ steps.version.outputs.version }}-arm64-v8a.apk || true
+          cp build/app/outputs/flutter-apk/app-x86_64-release.apk release-apks/begzar-v${{ steps.version.outputs.version }}-x86_64.apk || true
+          cp build/app/outputs/flutter-apk/app-release.apk release-apks/begzar-v${{ steps.version.outputs.version }}-universal.apk || true
+
+      - name: Upload APK artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-builds
+          path: release-apks/*.apk
+          retention-days: 30
+
+      - name: Send to Telegram
+        if: success()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          BUILD_NUMBER="${{ steps.version.outputs.build_number }}"
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          COMMIT_AUTHOR=$(git log -1 --pretty=format:'%an')
+          COMMIT_HASH=$(git log -1 --pretty=format:'%h')
+          
+          MESSAGE="🚀 *Begzar VPN - New Build*%0A%0A"
+          MESSAGE="${MESSAGE}📦 *Version:* \`${VERSION}\` (Build ${BUILD_NUMBER})%0A"
+          MESSAGE="${MESSAGE}🔨 *Commit:* \`${COMMIT_HASH}\`%0A"
+          MESSAGE="${MESSAGE}👤 *Author:* ${COMMIT_AUTHOR}%0A"
+          MESSAGE="${MESSAGE}💬 *Message:* ${COMMIT_MSG}%0A%0A"
+          MESSAGE="${MESSAGE}📥 *Download APKs:*"
+          
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d chat_id="${TELEGRAM_CHAT_ID}" \
+            -d text="${MESSAGE}" \
+            -d parse_mode="Markdown"
+          
+          # Send APK files
+          for apk in release-apks/*.apk; do
+            if [ -f "$apk" ]; then
+              filename=$(basename "$apk")
+              curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument" \
+                -F chat_id="${TELEGRAM_CHAT_ID}" \
+                -F document=@"$apk" \
+                -F caption="📱 ${filename}"
+            fi
+          done
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: release-apks/*.apk
+          body: |
+            ## Begzar VPN v${{ steps.version.outputs.version }}
+            
+            ### 📦 Downloads
+            - **Universal APK**: Compatible with all devices
+            - **ARM64-v8a**: For modern 64-bit devices (recommended)
+            - **ARMv7**: For older 32-bit devices
+            - **x86_64**: For emulators and x86 devices
+            
+            ### 📝 Changes
+            ${{ github.event.head_commit.message }}
+            
+            ---
+            Built with ❤️ by GitHub Actions
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
