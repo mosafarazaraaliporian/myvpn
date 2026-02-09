@@ -118,8 +118,8 @@ class _HomePageState extends State<HomePage> {
       final bool isWideScreen = size.width > 600;
 
       return Scaffold(
-      appBar: isWideScreen ? null : _buildAppBar(isWideScreen),
-      backgroundColor: const Color(0xff192028),
+      appBar: _buildAppBar(isWideScreen),
+      backgroundColor: const Color(0xFF111827),
       body: SafeArea(
         child: Column(
           children: [
@@ -128,10 +128,10 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 margin: const EdgeInsets.all(16),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2A2A2A),
-                  borderRadius: BorderRadius.circular(12),
+                  color: const Color(0xFF1F2937),
+                  borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: Colors.grey.withOpacity(0.1)),
                 ),
                 child: Row(

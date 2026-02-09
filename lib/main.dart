@@ -3,7 +3,6 @@ import 'package:pingo/common/http_client.dart';
 import 'package:pingo/common/theme.dart';
 import 'package:pingo/screens/about_screen.dart';
 import 'package:pingo/screens/home_screen.dart';
-import 'package:pingo/screens/modern_home_screen.dart';
 import 'package:pingo/screens/settings_screen.dart';
 import 'package:pingo/widgets/navigation_rail_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -136,8 +135,8 @@ class _RootScreenState extends State<RootScreen> {
   @override
   void initState() {
     super.initState();
-    // استفاده از UI جدید
-    _pages = [SettingsWidget(), ModernHomeScreen(), AboutScreen()];
+    // استفاده از UI قدیمی با منطق کامل
+    _pages = [SettingsWidget(), HomePage(), AboutScreen()];
   }
 
   @override
@@ -145,33 +144,9 @@ class _RootScreenState extends State<RootScreen> {
     final isWideScreen = MediaQuery.of(context).size.width > 600;
 
     return Scaffold(
-      body: Row(
-        children: [
-          Expanded(
-            child: IndexedStack(
-              index: _selectedIndex,
-              children: _pages,
-            ),
-          ),
-          AnimatedSlide(
-            duration: Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            offset: isWideScreen ? Offset.zero : Offset(1, 0),
-            child: AnimatedOpacity(
-              duration: Duration(milliseconds: 200),
-              opacity: isWideScreen ? 1 : 0,
-              child: isWideScreen
-                  ? NavigationRailWidget(
-                      selectedIndex: _selectedIndex,
-                      singStatus: v2rayStatus,
-                      onDestinationSelected: (index) {
-                        setState(() => _selectedIndex = index);
-                      },
-                    )
-                  : SizedBox(),
-            ),
-          ),
-        ],
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
       ),
       bottomNavigationBar: !isWideScreen
           ? Container(
