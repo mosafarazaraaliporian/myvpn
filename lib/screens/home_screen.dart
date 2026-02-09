@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:pingo/common/cha.dart';
+import 'package:pingo/common/config.dart';
 import 'package:pingo/common/http_client.dart';
 import 'package:pingo/common/secure_storage.dart';
 import 'package:pingo/widgets/connection_widget.dart';
@@ -54,24 +55,37 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     getVersionName();
     _loadServerSelection();
-    flutterV2ray
-        .initializeV2Ray(
-      notificationIconResourceType: "mipmap",
-      notificationIconResourceName: "launcher_icon",
-    )
-        .then((value) async {
-      coreVersion = await flutterV2ray.getCoreVersion();
+    
+    // در حالت تست، V2Ray رو initialize نمی‌کنیم
+    if (!AppConfig.isTestMode) {
+      flutterV2ray
+          .initializeV2Ray(
+        notificationIconResourceType: "mipmap",
+        notificationIconResourceName: "launcher_icon",
+      )
+          .then((value) async {
+        coreVersion = await flutterV2ray.getCoreVersion();
 
-      setState(() {});
-      Future.delayed(
-        Duration(seconds: 1),
-        () {
-          if (v2rayStatus.value.state == 'CONNECTED') {
-            delay();
-          }
-        },
-      );
-    });
+        setState(() {});
+        Future.delayed(
+          Duration(seconds: 1),
+          () {
+            if (v2rayStatus.value.state == 'CONNECTED') {
+              delay();
+            }
+          },
+        );
+      }).catchError((error) {
+        if (AppConfig.enableDebugLogs) {
+          print('V2Ray initialization error: $error');
+        }
+      });
+    } else {
+      // حالت تست - فقط برای نمایش UI
+      if (AppConfig.enableDebugLogs) {
+        print('Running in TEST MODE - VPN disabled');
+      }
+    }
   }
 
   @override
@@ -566,6 +580,31 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> connect(List<String> serverList) async {
+    // حالت تست - فقط نمایش UI
+    if (AppConfig.isTestMode) {
+      setState(() {
+        isLoading = true;
+      });
+      
+      // شبیه‌سازی اتصال
+      await Future.delayed(Duration(seconds: 2));
+      
+      setState(() {
+        isLoading = false;
+      });
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('TEST MODE: VPN disabled on emulator'),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.orange,
+          ),
+        );
+      }
+      return;
+    }
+    
     if (serverList.isEmpty) {
       // سرور یافت نشد
       if (mounted) {
